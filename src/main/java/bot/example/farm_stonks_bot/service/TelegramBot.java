@@ -49,7 +49,9 @@ public class TelegramBot extends TelegramLongPollingBot {
             } else {
                 startCommandReceived(chatId, "sorry, an unrecognized message");
                 //tinkoffAPIControllers.getLastPricesStocks();
-                tinkoffApiService.getSharesRussian();
+                //tinkoffApiService.getSharesRussian();
+                //tinkoffApiService.getLastPrice();
+                tinkoffApiService.getCandlePriceOpen();
 
             }
         }

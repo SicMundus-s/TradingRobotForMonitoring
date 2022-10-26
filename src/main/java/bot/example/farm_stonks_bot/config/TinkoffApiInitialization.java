@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import ru.tinkoff.piapi.core.InvestApi;
 
 @Component
-@PropertySource("classpath:configTinkof.yaml")
+@PropertySource("classpath:application.properties")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
