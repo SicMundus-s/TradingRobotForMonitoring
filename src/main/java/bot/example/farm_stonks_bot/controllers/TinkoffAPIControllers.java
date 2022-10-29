@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 
 @Controller
 @Data
-// Получить список всех российских акций - получить их фиги и имена - ...
 public class TinkoffAPIControllers {
 
   /*  public void getLastPricesStocks() {

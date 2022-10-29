@@ -57,14 +57,29 @@ public class TinkoffApiService {
 
     // ToDo Сделать запрос к своей БД -> Получить оттуда фиги -> По фигам найти цену открытия за 1 день
     public void getCandlePriceOpen() {
-        var candlesDay = tinkoffAPI.getApi().
-                getMarketDataService().
-                getCandlesSync("BBG004730N88", Instant.now().minus(1, ChronoUnit.DAYS), Instant.now(), CandleInterval.CANDLE_INTERVAL_DAY);
+        var figis = getSharesRussian();
 
-        log.info("получено {} 1-дневных свечей для инструмента с figi {}", candlesDay.size(), "BBG004730N88");
-        for (HistoricCandle candle : candlesDay) {
-            printCandle(candle);
+        for(Share figi : figis) {
+            var candlesDay = tinkoffAPI.getApi().
+                    getMarketDataService().
+                    getCandlesSync(figi.getFigi(), Instant.now().minus(1, ChronoUnit.DAYS),
+                            Instant.now(), CandleInterval.CANDLE_INTERVAL_DAY);
+
+            for(HistoricCandle candle : candlesDay) {
+                long openPrice = candle.getOpen().getUnits();
+                long closePrice = candle.getClose().getUnits();
+                float percent = (float) (((openPrice - closePrice) / openPrice) * 100);
+                System.out.println("Name: " + figi.getName() +
+                        " Opening price: " + openPrice +
+                        " close price: " + closePrice +
+                        "(" + percent + ")");
+            }
         }
+
+        //log.info("получено {} 1-дневных свечей для инструмента с figi {}", candlesDay.size(), "BBG004730N88");
+        /*for (HistoricCandle candle : candlesDay) {
+            printCandle(candle);
+        }*/
     }
 
     private static void printCandle(HistoricCandle candle) {
